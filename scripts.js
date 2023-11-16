@@ -23,9 +23,9 @@
 	  var database = firebase.database();
 
 	  //getting reference to the data we want
-	  var dataRef1 = database.ref('temp');
-	  var dataRef2 = database.ref('humid');
-	  var dataRef3 = database.ref('led');
+	  var dataRef1 = database.ref('humid');
+	  var dataRef2 = database.ref('led');
+ 	  var dataRef3 = database.ref('temp');
 
 	  //fetch the data
 	  dataRef1.on('value', function(getdata1){
@@ -33,8 +33,8 @@
 	  	document.getElementById('humidity').innerHTML = humi + "%";
 	  })
 
-	   dataRef2.on('value', function(getdata2){
-	  	var temp = getdata2.val();
+	   dataRef3.on('value', function(getdata3){
+	  	var temp = getdata3.val();
 	  	document.getElementById('temperature').innerHTML = temp + "&#8451;";
 	  })
 
@@ -44,13 +44,13 @@
 var btn=document.getElementById("led");
 
 function press() {
-index++;
-if (index%2==1) {
-	database.ref('LED').set("1");
-	document.getElementById('led').innerHTML="turn off";
-}
-else {
-database.ref('LED').set("0");
-document.getElementById('led').innerHTML="turn on";
-}
+	index++;
+	if (index%2==1) {
+		database.ref('led').set(true);
+		document.getElementById('led').innerHTML="turn off";
+	}
+	else {
+		database.ref('led').set(false);
+		document.getElementById('led').innerHTML="turn on";
+	}
 }
