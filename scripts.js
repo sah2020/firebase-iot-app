@@ -1,20 +1,12 @@
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyCl4unu9pY2DDQxVgPjIM12i-jViTtAVTk",
-
-    authDomain: "iot2023-20c28.firebaseapp.com",
-
-    databaseURL: "https://iot2023-20c28-default-rtdb.firebaseio.com",
-
-    projectId: "iot2023-20c28",
-
-    storageBucket: "iot2023-20c28.appspot.com",
-
-    messagingSenderId: "1078279391484",
-
-    appId: "1:1078279391484:web:16f2d8e01dc6d004bbef79",
-
+    apiKey: "AIzaSyD8BfVD5v4MeKsXga2leQrYiqmpll5oMtE",
+    authDomain: "iot2023-99e2c.firebaseapp.com",
+    projectId: "iot2023-99e2c",
+    storageBucket: "iot2023-99e2c.appspot.com",
+    messagingSenderId: "70235148479",
+    appId: "1:70235148479:web:90c0374539ef71ed29760a",
     measurementId: "G-KB6FT1D0HC"
 
   };
