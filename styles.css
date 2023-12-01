@@ -1,0 +1,84 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+    max-width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Add this style for LCD text */
+#lcdText {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    padding: 10px;
+    background-color: #333;
+    color: #00FF00;
+    border-radius: 4px;
+}
+
+/* Add these styles for the switch button */
+/*.switch-container {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*}*/
+
+.switch-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.switch-button {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 20px; /* Round corners to make it look like a switch */
+    cursor: pointer;
+}
+
+.switch-handle {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%; /* Make the handle circular */
+    transition: transform 0.3s ease;
+}
+
+/* Add these styles to simulate the switch in the 'on' state */
+.switch-button.on {
+    background-color: #4caf50;
+}
+
+.switch-handle.on {
+    transform: translateX(24px);
+}

@@ -1,56 +1,66 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyCSYLu7i_iBWP_mTBE0Ncyu4eejZ22ckyE",
+    authDomain: "iot-smart-parking-6f0cd.firebaseapp.com",
+    databaseURL: "https://iot-smart-parking-6f0cd-default-rtdb.firebaseio.com",
+    projectId: "iot-smart-parking-6f0cd",
+    storageBucket: "iot-smart-parking-6f0cd.appspot.com",
+    messagingSenderId: "893449352981",
+    appId: "1:893449352981:web:2374737875b8bfeb5cdb1c"
+};
 
-  const firebaseConfig = {
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+let isGateOpen = false;
 
-    apiKey: "AIzaSyD8BfVD5v4MeKsXga2leQrYiqmpll5oMtE",
-    authDomain: "iot2023-99e2c.firebaseapp.com",
-    projectId: "iot2023-99e2c",
-    storageBucket: "iot2023-99e2c.appspot.com",
-    messagingSenderId: "70235148479",
-    appId: "1:70235148479:web:90c0374539ef71ed29760a",
-    measurementId: "G-KB6FT1D0HC"
+// Get references to HTML elements
+const parkingSpotFreeElement = document.getElementById('parkingSpotFree');
+const lcdTextElement = document.getElementById('lcdText');
+const servoAngleElement = document.getElementById('servoAngle');
+const rotateServoButton = document.getElementById('rotateServo');
+const parkingChartElement = document.getElementById('parkingChart').getContext('2d');
 
-  };
+// Initialize Chart
+const parkingChart = new Chart(parkingChartElement, {
+    type: 'bar',
+    data: {
+        labels: ['Occupied', 'Free'],
+        datasets: [{
+            label: 'Parking Status',
+            data: [0, 1],
+            backgroundColor: ['#FF6347', '#7CFC00']
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 4
+            }
+        }
+    }
+});
 
+// Firebase event listeners
+database.ref('parking-spot-free').on('value', snapshot => {
+    const isParkingSpotFree = snapshot.val() === 'yes';
+    parkingSpotFreeElement.textContent = isParkingSpotFree ? 'Yes' : 'No';
 
-  // Initialize Firebase
+    // Update chart data
+    parkingChart.data.datasets[0].data = [isParkingSpotFree ? 2 : 3, isParkingSpotFree ? 3 : 2];
+    parkingChart.update();
+});
 
-  //const app = initializeApp(firebaseConfig);
+database.ref('lcd-text').on('value', snapshot => {
+    lcdTextElement.textContent = snapshot.val();
+});
 
-  //const analytics = getAnalytics(app);
-  firebase.initializeApp(firebaseConfig);
+const toggleGateButton = document.getElementById('toggleGateButton');
+toggleGateButton.addEventListener('click', () => {
+    isGateOpen = !isGateOpen;
+    const newServoAngle = isGateOpen ? 90 : 0;
+    database.ref('servo-angle').set(newServoAngle);
 
-	  // getting reference to the database
-	  var database = firebase.database();
-
-	  //getting reference to the data we want
-	  var dataRef1 = database.ref('humid');
-	  var dataRef2 = database.ref('led');
- 	  var dataRef3 = database.ref('temp');
-
-	  //fetch the data
-	  dataRef1.on('value', function(getdata1){
-	  	var humi = getdata1.val();
-	  	document.getElementById('humidity').innerHTML = humi + "%";
-	  })
-
-	   dataRef3.on('value', function(getdata3){
-	  	var temp = getdata3.val();
-	  	document.getElementById('temperature').innerHTML = temp + "&#8451;";
-	  })
-
-
-
-	var index=0;
-var btn=document.getElementById("led");
-
-function press() {
-	index++;
-	if (index%2==1) {
-		database.ref('led').set(true);
-		document.getElementById('led').innerHTML="turn off";
-	}
-	else {
-		database.ref('led').set(false);
-		document.getElementById('led').innerHTML="turn on";
-	}
-}
+    // Move the handle to simulate the switch toggle
+    const switchHandle = toggleGateButton.querySelector('.switch-handle');
+    switchHandle.style.transform = isGateOpen ? 'translateX(24px)' : 'translateX(0)';
+});
